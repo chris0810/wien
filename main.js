@@ -52,8 +52,12 @@ async function showStops (url){
     L.geoJSON(jsondata,{
         onEachFeature: function(feature , layer){
             let prop= feature.properties;
-            layer.bindPopup(prop.NAME);
-            console.log(feature.properties, prop.NAME);
+            //layer.bindPopup(prop.LINE_NAME);
+            layer.bindPopup(`
+            <img src="${prop.THUMBNAIL}" alt="*">
+            <h4>${prop.LINE_NAME}</h4>
+            `);
+            console.log(feature.properties, prop.LINE_NAME);
         }
     }
         ).addTo(themaLayer.stops)
