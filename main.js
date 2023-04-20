@@ -13,7 +13,7 @@ let map = L.map("map").setView([
 ], 12);
 //thematische Layer
 let themaLayer = {
-    stops: L.featureGroup(),
+    stops: L.featureGroup().addTo(map),
     lines: L.featureGroup(),
     zones: L.featureGroup(),
     sites: L.featureGroup(),
@@ -49,7 +49,7 @@ L.control.scale({
 async function showStops (url){
     let response = await fetch(url);
     let jsondata = await response.json();
-    L.geoJSON(jsondata).addTo(map)
+    L.geoJSON(jsondata).addTo(themaLayer.stops)
     console.log (response, jsondata)
 }
 showStops("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKHTSVSLOGD&srsName=EPSG:4326&outputFormat=json")
@@ -57,7 +57,7 @@ showStops("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&vers
 async function showLines (url){
     let response = await fetch(url);
     let jsondata = await response.json();
-    L.geoJSON(jsondata).addTo(map)
+    L.geoJSON(jsondata).addTo(themaLayer.lines)
     console.log (response, jsondata)
 }
 
@@ -65,7 +65,7 @@ showLines("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&vers
 async function showSights (url){
     let response = await fetch(url);
     let jsondata = await response.json();
-    L.geoJSON(jsondata).addTo(map)
+    L.geoJSON(jsondata).addTo(themaLayer.sights)
     console.log (response, jsondata)
 }
 showSights("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:SEHENSWUERDIGOGD&srsName=EPSG:4326&outputFormat=json")
@@ -73,7 +73,7 @@ showSights("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&ver
 async function showZones (url){
     let response = await fetch(url);
     let jsondata = await response.json();
-    L.geoJSON(jsondata).addTo(map)
+    L.geoJSON(jsondata).addTo(themaLayer.zones)
     console.log (response, jsondata)
 }
 showZones("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:FUSSGEHERZONEOGD&srsName=EPSG:4326&outputFormat=json")
