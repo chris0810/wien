@@ -49,8 +49,15 @@ L.control.scale({
 async function showStops (url){
     let response = await fetch(url);
     let jsondata = await response.json();
-    L.geoJSON(jsondata).addTo(themaLayer.stops)
-    console.log (response, jsondata)
+    L.geoJSON(jsondata,{
+        onEachFeature: function(feature , layer){
+            let prop= feature.properties;
+            layer.bindPopup(prop.NAME);
+            console.log(feature.properties, prop.NAME);
+        }
+    }
+        ).addTo(themaLayer.stops)
+    //console.log (response, jsondata)
 }
 showStops("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKHTSVSLOGD&srsName=EPSG:4326&outputFormat=json")
 
@@ -58,7 +65,7 @@ async function showLines (url){
     let response = await fetch(url);
     let jsondata = await response.json();
     L.geoJSON(jsondata).addTo(themaLayer.lines)
-    console.log (response, jsondata)
+    //console.log (response, jsondata)
 }
 
 showLines("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKHTSVSLOGD&srsName=EPSG:4326&outputFormat=json");
@@ -66,7 +73,7 @@ async function showSights (url){
     let response = await fetch(url);
     let jsondata = await response.json();
     L.geoJSON(jsondata).addTo(themaLayer.sights)
-    console.log (response, jsondata)
+    //console.log (response, jsondata)
 }
 showSights("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:SEHENSWUERDIGOGD&srsName=EPSG:4326&outputFormat=json")
 
@@ -74,7 +81,7 @@ async function showZones (url){
     let response = await fetch(url);
     let jsondata = await response.json();
     L.geoJSON(jsondata).addTo(themaLayer.zones)
-    console.log (response, jsondata)
+    //console.log (response, jsondata)
 }
 showZones("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:FUSSGEHERZONEOGD&srsName=EPSG:4326&outputFormat=json")
 //https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKHTSVSLOGD&srsName=EPSG:4326&outputFormat=json
