@@ -15,9 +15,9 @@ let map = L.map("map").setView([
 //thematische Layer
 let themaLayer = {
     stops: L.featureGroup(),
-    lines: L.featureGroup().addTo(map),
+    lines: L.featureGroup(),
     zones: L.featureGroup(),
-    sights: L.featureGroup(),
+    sights: L.featureGroup().addTo(map),
 
 }
 // Hintergrundlayer
@@ -105,7 +105,7 @@ async function showLines(url){
             `);
             //console.log(feature.properties, prop.LINE_NAME);
             lineNames[prop.LINE_ID]=prop.LINE_NAME;
-            console.log(lineNames)
+            //console.log(lineNames)
         }
     }).addTo(themaLayer.lines);
 }
@@ -140,6 +140,22 @@ async function showZones(url){
     L.geoJSON(jsondata).addTo(themaLayer.zones)
     //console.log(response, jsondata)
     L.geoJSON(jsondata, {
+            style: function (feature) {
+                return {
+                color: "#F012BE",
+                weiht:1,
+                fillColor: "#F012BE",
+                fillOpacity:0.4,
+                opacity:0.1,
+                
+                
+
+
+                
+                    
+    
+                };
+            },
         onEachFeature: function(feature, layer){
             let prop = feature.properties;
             layer.bindPopup(`
