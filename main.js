@@ -18,7 +18,8 @@ let themaLayer = {
     lines: L.featureGroup(),
     zones: L.featureGroup(),
     sights: L.featureGroup(),
-    hotels: L.featureGroup().addTo(map),
+    hotels: L.markerClusterGroup({disableClusteringAtZoom: 17
+    })
 
 }
 // Hintergrundlayer
@@ -35,7 +36,7 @@ let layerControl = L.control.layers({
     "Vienna Sightseeing Routes": themaLayer.lines,
     "Fußgängerzonen": themaLayer.zones,
     "Sites": themaLayer.sights,
-    "Hotels": themaLayer.hotels,
+    "Hotels": themaLayer.hotels.addTo(map)
 }
 ).addTo(map);
 
@@ -198,6 +199,8 @@ showZones("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&vers
 async function showHotels(url){
     let response = await fetch(url);
     let jsondata = await response.json();
+    
+
     L.geoJSON(jsondata)//.addTo(themaLayer.hotels)
     //console.log(response, jsondata)
     L.geoJSON(jsondata, {
