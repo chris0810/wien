@@ -17,8 +17,8 @@ let themaLayer = {
     stops: L.featureGroup(),
     lines: L.featureGroup(),
     zones: L.featureGroup(),
-    sights: L.featureGroup().addTo(map),
-    hotels: L.featureGroup(),
+    sights: L.featureGroup(),
+    hotels: L.featureGroup().addTo(map),
 
 }
 // Hintergrundlayer
@@ -203,12 +203,33 @@ async function showHotels(url){
     L.geoJSON(jsondata, {
             pointToLayer: function(feature, latlng) {
                 
+                if (feature.properties.KATEGORIE_TXT == "nicht kategorisiert") {
+                    icon = "icons/hotel_0star.png"
+                }
+                else if (feature.properties.KATEGORIE_TXT == "1*") {
+                    icon = "icons/hotel_1star.png"
+                }
+                else if (feature.properties.KATEGORIE_TXT == "2*") {
+                    icon = "icons/hotel_2stars.png"
+                }
+                else if (feature.properties.KATEGORIE_TXT == "3*") {
+                    icon = "icons/hotel_3stars.png"
+                }
+                else if (feature.properties.KATEGORIE_TXT == "4*") {
+                    icon = "icons/hotel_4stars.png"
+                }
+                else if (feature.properties.KATEGORIE_TXT == "5*") {
+                    icon = "icons/hotel_5stars.png"
+                }
+    
+
                 return L.marker(latlng, {
                     icon: L.icon({
-                        iconUrl: "icons/hotel_0star.png",
+                        iconUrl: 'icons/hotel.png',
+                        iconUrl: icon,
                         iconAnchor: [16, 37],
                         popupAnchor: [0, -37],
-    
+                        
                     })
                 });
             },
